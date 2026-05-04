@@ -68,33 +68,44 @@ if uploaded_file is None:
 else:
     try:
         if uploaded_file.name.endswith(".zip"):
+
             with zipfile.ZipFile(io.BytesIO(uploaded_file.getvalue()), 'r') as z:
+
                 txt_files = [f for f in z.namelist() if f.endswith(".txt")]
+
                 if len(txt_files) == 0:
                     st.error("No .txt file found inside the zip. Please export the chat again.")
                     st.stop()
-                data = z.read(txt_files[0]).decode('utf-8')
+
+                raw_data = z.read(txt_files[0])
+
+                try:
+                    data = raw_data.decode('utf-8')
+
+                except UnicodeDecodeError:
+
+                    try:
+                        data = raw_data.decode('utf-8-sig')
+
+                    except UnicodeDecodeError:
+                        data = raw_data.decode('latin-1')
+
         else:
+
             bytes_data = uploaded_file.getvalue()
+
             try:
                 data = bytes_data.decode('utf-8')
+
             except UnicodeDecodeError:
+
                 try:
                     data = bytes_data.decode('utf-8-sig')
+
                 except UnicodeDecodeError:
                     data = bytes_data.decode('latin-1')
 
-            raw_data = z.read(txt_files[0])
-
-            try:
-                data = raw_data.decode('utf-8')
-            except UnicodeDecodeError:
-                try:
-                    data = raw_data.decode('utf-8-sig')
-                except UnicodeDecodeError:
-                    data = raw_data.decode('latin-1')
-
-            data = data.replace('\r\n', '\n')
+        data = data.replace('\r\n', '\n')
 
         df = load_data(data)
 
