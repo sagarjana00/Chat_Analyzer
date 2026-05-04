@@ -3,27 +3,24 @@ import pandas as pd
 
 def preprocess(data):
     data = data.replace('\u202f', ' ')
-    pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s(?:am|pm)?\s-\s'
-    messages = re.split(pattern,data)[1:]
-    dates = re.findall(pattern,data)
+    
+    pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?\s-\s'
+    
+    messages = re.split(pattern, data)[1:]
+    dates = re.findall(pattern, data)
 
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
 
-    # Remove the " - " from the end of each date string
     df['message_date'] = df['message_date'].str.rstrip(' - ')
-
-    # Now convert to datetime
-    df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%Y, %I:%M %p')
+    df['message_date'] = pd.to_datetime(df['message_date'], format='mixed', dayfirst=True)
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
-
 
     users = []
     messages = []
     for message in df['user_message']:
-        # Match username (letters, numbers, spaces, emojis) followed by colon and space
         entry = re.split(r'([^:\n]+?):\s', message)
-        if len(entry) > 2 and entry[1]:  # user name exists
+        if len(entry) > 2 and entry[1]:
             users.append(entry[1].strip())
             messages.append(entry[2].strip())
         else:
@@ -41,7 +38,6 @@ def preprocess(data):
     df['day_name'] = df['date'].dt.day_name()
     df['hour'] = df['date'].dt.hour
     df['minute'] = df['date'].dt.minute
-
 
     period = []
     for hour in df[['day_name', 'hour']]['hour']:

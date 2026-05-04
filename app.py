@@ -189,10 +189,11 @@ else:
 
                     with st.expander("☁️ WordCloud", expanded=False):
                         st.subheader("☁️ WordCloud")
-                        fig, ax = plt.subplots()
+                        fig, ax = plt.subplots(figsize=(10, 4))
                         ax.imshow(df_wc)
                         ax.axis('off')
-                        st.pyplot(fig)
+                        plt.tight_layout()
+                        st.pyplot(fig, use_container_width=True)
 
                     with st.expander("🔤 Most Frequent Words", expanded=False):
                         st.subheader("🔤 Most Frequent Words")

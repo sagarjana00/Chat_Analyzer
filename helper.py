@@ -39,11 +39,16 @@ def most_busy_users(df):
 
 
 
-def create_wordcloud(selected_user,df):
-    if selected_user!='Overall':
+def create_wordcloud(selected_user, df):
+    if selected_user != 'Overall':
         df = df[df['user'] == selected_user]
 
-    wc = WordCloud(width=500,height=500,min_font_size=10,background_color='white')
+    wc = WordCloud(
+        width=800, 
+        height=550,  
+        min_font_size=10,
+        background_color='white'
+    )
     df_wc = wc.generate(df['message'][df['message'] != '<Media omitted>'].str.cat(sep=" "))
     return df_wc
 
