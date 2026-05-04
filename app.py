@@ -76,7 +76,25 @@ else:
                 data = z.read(txt_files[0]).decode('utf-8')
         else:
             bytes_data = uploaded_file.getvalue()
-            data = bytes_data.decode('utf-8')
+            try:
+                data = bytes_data.decode('utf-8')
+            except UnicodeDecodeError:
+                try:
+                    data = bytes_data.decode('utf-8-sig')
+                except UnicodeDecodeError:
+                    data = bytes_data.decode('latin-1')
+
+            raw_data = z.read(txt_files[0])
+
+            try:
+                data = raw_data.decode('utf-8')
+            except UnicodeDecodeError:
+                try:
+                    data = raw_data.decode('utf-8-sig')
+                except UnicodeDecodeError:
+                    data = raw_data.decode('latin-1')
+
+            data = data.replace('\r\n', '\n')
 
         df = load_data(data)
 
