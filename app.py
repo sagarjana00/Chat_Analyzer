@@ -21,7 +21,7 @@ def load_data(data):
 
 st.sidebar.title("Whatsapp Chats Analyzer")
 
-uploaded_file = st.sidebar.file_uploader("Choose a file", type=["txt", "zip"])
+uploaded_file = st.sidebar.file_uploader("Choose a file")
 
 if uploaded_file is None:
     _, center, _ = st.columns([1, 6, 1])
