@@ -6,7 +6,10 @@ import zipfile
 import io
 import pandas as pd
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except OSError:
+    plt.style.use('seaborn-whitegrid')
 
 st.set_page_config(
     page_title="WhatsApp Chat Analyzer",
@@ -15,7 +18,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-@st.cache_data
 def load_data(data):
     return preprocessor.preprocess(data)
 

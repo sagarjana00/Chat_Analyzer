@@ -11,6 +11,9 @@ def preprocess(data):
 
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
 
+    if df.empty:
+        return df
+
     df['message_date'] = df['message_date'].str.rstrip(' - ')
     df['message_date'] = pd.to_datetime(df['message_date'], format='mixed', dayfirst=True)
 
