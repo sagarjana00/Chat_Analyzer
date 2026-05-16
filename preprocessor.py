@@ -15,7 +15,12 @@ def preprocess(data):
         return df
 
     df['message_date'] = df['message_date'].str.rstrip(' - ')
-    df['message_date'] = pd.to_datetime(df['message_date'], format='mixed', dayfirst=True)
+    # Let pandas infer formats and coerce invalid parses to NaT
+    df['message_date'] = pd.to_datetime(df['message_date'], dayfirst=True, errors='coerce')
+
+    # If none of the dates could be parsed, return empty dataframe to signal parse failure
+    if df['message_date'].isna().all():
+        return pd.DataFrame()
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
