@@ -216,20 +216,10 @@ git push origin feature/your-feature-name
 - Sentiment analysis per user
 - Language detection
 - Response time analysis
+- fix/improve mobile view
 - Dark mode toggle
 - Support for Telegram exports
 
----
-
-
----
-
-## 🙏 Acknowledgements
-
-- [Streamlit](https://streamlit.io) — for making data apps effortless
-- [WordCloud](https://github.com/amueller/word_cloud) — word cloud generation
-- [URLExtract](https://github.com/lipoja/URLExtract) — URL detection
-- [emoji](https://github.com/carpedm20/emoji) — emoji data
 
 ---
 
@@ -240,3 +230,8 @@ Made with ❤️ and Python
 ⭐ Star this repo if you found it useful!
 
 </div>
+
+---
+###👨‍💻 Author
+
+##Sagar Jana
