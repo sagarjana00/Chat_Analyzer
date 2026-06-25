@@ -232,6 +232,6 @@ Made with ❤️ and Python
 </div>
 
 ---
-###👨‍💻 Author
+👨‍💻 Author
 
-##Sagar Jana
+Sagar Jana
